@@ -1,9 +1,15 @@
 ---
-title: 'T'
+title: 'GS-ID: Illumination Decomposition on Gaussian Splatting'
 date: '2024-08-18'
-tags: ['feature']
+tags: ['ICCV2025']
 draft: false
-summary: 'XXXX'
+summary: 'We present GS-ID, a novel end-to-end framework that achieves comprehensive illumination decomposition by integrating adaptive light aggregation with diffusion-based material priors. Our method is designed to generate physically accurate 3D data with correct geometry, materials, and lighting — a critical foundation for training and evaluating world models and large language models that interact with or reason about the physical world.'
 ---
 
-XXXX
+Gaussian Splatting (GS) has become an effective representation for photorealistic rendering, but the information about geometry, material, and lighting is entangled and requires illumination decomposition for editing.
+Current GS-based approaches face significant challenges in disentangling complex light-geometry-material interactions under non-Lambertian conditions, particularly when handling specular reflections and shadows.
+We present GS-ID, a novel end-to-end framework that achieves comprehensive illumination decomposition by integrating adaptive light aggregation with diffusion-based material priors.
+In addition to a learnable environment map that captures ambient illumination, we model complex local lighting conditions by adaptively aggregating a set of anisotropic and spatially-varying spherical Gaussian mixtures during optimization.
+To better model shadow effects, we associate a learnable unit vector with each splat to represent how multiple light sources cause the shadow, further enhancing lighting and material estimation.
+Together with intrinsic priors from diffusion models, GS-ID significantly reduces light-geometry-material ambiguity and achieves state-of-the-art illumination decomposition performance.
+Experiments also show that GS-ID effectively supports various downstream applications such as relighting and scene composition.
