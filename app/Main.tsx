@@ -7,12 +7,12 @@ import { memo } from 'react'
 
 const MAX_DISPLAY = 5
 
-type PostItem = {
+export type PostItem = {
   slug: string
   date: string
   title: string
-  summary: string
-  tags: string[]
+  summary?: string        
+  tags?: string[]          
 }
 
 export default function Home({ posts }: { posts: PostItem[] }) {
@@ -177,9 +177,9 @@ const PostRow = memo(function PostRow({ post }: { post: PostItem }) {
             </Link>
           </h2>
 
-          {tags?.length > 0 && (
+          {(tags ?? []).length > 0 && (
             <div className="mt-1 flex flex-wrap gap-1">
-              {tags.map((tag) => (
+              {(tags ?? []).map((tag) => (
                 <Tag key={tag} text={tag} />
               ))}
             </div>
