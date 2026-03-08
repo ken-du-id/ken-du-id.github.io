@@ -71,7 +71,7 @@ export const site = {
   heroStats: [
     { label: 'Research', value: 'Light-aware world models' },
     { label: 'Core stack', value: '3DGS · inverse rendering · simulation' },
-    { label: 'Identity', value: 'Researcher · builder · operator' }
+    { label: 'Identity', value: 'PhD Candidate · Researcher · Investor' }
   ],
 
   researchAreas: [
