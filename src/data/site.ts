@@ -43,7 +43,7 @@ export type ExperienceItem = {
 export const site = {
   name: 'Kang Du',
   chineseName: '杜康',
-  title: 'PhD Candidate · Investor · Operator',
+  title: 'PhD Candidate · Researcher · Investor',
   subtitle: 'Building light-aware world models for real environments.',
   email: 'kdu800@connect.hkust-gz.edu.cn',
   secondaryEmail: '270382069@qq.com',
