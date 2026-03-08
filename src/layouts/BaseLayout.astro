@@ -1,12 +1,42 @@
 ---
 import '../styles/global.css';
+import { site } from '../data/site';
 
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
+  canonical?: string;
+  image?: string;
 }
 
-const { title, description = 'Personal academic homepage' } = Astro.props;
+const {
+  title = `${site.name} — ${site.subtitle}`,
+  description = site.description,
+  canonical = site.website,
+  image = `${site.website}avatar.png`
+} = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  alternateName: site.chineseName,
+  url: site.website,
+  image,
+  email: site.email,
+  jobTitle: site.title,
+  description: site.description,
+  address: {
+    '@type': 'Place',
+    addressLocality: site.location
+  },
+  sameAs: [
+    site.links.scholar,
+    site.links.github,
+    site.links.linkedin,
+    site.links.website
+  ].filter(Boolean)
+};
 ---
 
 <!doctype html>
@@ -14,8 +44,30 @@ const { title, description = 'Personal academic homepage' } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
+
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta property="og:site_name" content={site.name} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <link rel="icon" type="image/png" href="/avatar.png" />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(jsonLd)}
+    />
   </head>
   <body>
     <div class="page-shell"></div>

@@ -10,7 +10,12 @@ import Contact from '../components/Contact.astro';
 import { site } from '../data/site';
 ---
 
-<BaseLayout title={`${site.name} · Personal Homepage`} description={site.description}>
+<BaseLayout
+ title={`${site.name} · Personal Homepage`}
+ description={site.description}
+ canonical={site.website}
+ image={`${site.website}avatar.png`}
+>
   <Header />
   <main class="container page-main">
     <Hero />
