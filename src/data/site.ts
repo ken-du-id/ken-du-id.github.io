@@ -79,12 +79,12 @@ export const site = {
   ],
   experience: [
     {
-      period: '2025–Present',
-      role: 'Head of Simulation Platform',
+      period: '2025-Present',
+      role: 'Lead of Simulation Platform',
       organization: 'Ant Group'
     },
     {
-      period: '2024–Present',
+      period: '2024-Present',
       role: 'PhD Candidate in Computer Science',
       organization: 'HKUST (Guangzhou)'
     },
@@ -94,12 +94,12 @@ export const site = {
       organization: 'Meituan'
     },
     {
-      period: '2022–2025',
+      period: '2022-2025',
       role: '3D Simulation & Rendering Expert',
       organization: 'Tencent'
     },
     {
-      period: '2021–2022',
+      period: '2021-2022',
       role: 'Real-time Rendering Engine Lead',
       organization: 'Meituan'
     }
