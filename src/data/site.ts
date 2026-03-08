@@ -43,7 +43,7 @@ export type ExperienceItem = {
 export const site = {
   name: 'Kang Du',
   chineseName: '杜康',
-  title: 'PhD Candidate · Researcher · Investor',
+  title: 'Researcher · Entrepreneur · Investor',
   subtitle: 'Building light-aware world models for real environments.',
   email: 'kdu800@connect.hkust-gz.edu.cn',
   secondaryEmail: '270382069@qq.com',
@@ -71,7 +71,7 @@ export const site = {
   heroStats: [
     { label: 'Research', value: 'Light-aware world models' },
     { label: 'Core stack', value: '3DGS · inverse rendering · simulation' },
-    { label: 'Identity', value: 'PhD Candidate · Researcher · Investor' }
+    { label: 'Identity', value: 'Researcher · Entrepreneur · Investor' }
   ],
 
   researchAreas: [
