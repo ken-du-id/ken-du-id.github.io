@@ -1,0 +1,60 @@
+---
+import { site } from '../data/site';
+---
+
+<section class="hero" id="top">
+  <div class="hero-copy">
+    <img class="avatar" src="/avatar.png" alt={site.name} />
+
+    <p class="eyebrow">{site.title}</p>
+    <h1>
+      <span>{site.name} {site.chineseName}</span>
+    </h1>
+    <p class="subtitle">{site.subtitle}</p>
+    <p class="description">{site.description}</p>
+
+    <div class="hero-links">
+      <a href={site.links.email}>Email</a>
+      <a href={site.links.scholar}>Scholar</a>
+      <a href={site.links.github}>GitHub</a>
+      <a href={site.links.cv}>CV</a>
+      <a href={site.links.website}>Website</a>
+    </div>
+  </div>
+
+  <div class="hero-side">
+    <div class="info-panel hero-panel">
+      <div class="hero-panel-grid">
+        {site.heroStats.map((item) => (
+          <div>
+            <span class="label">{item.label}</span>
+            <strong>{item.value}</strong>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="info-panel compact-panel">
+      <span class="label">Current roles</span>
+      <ul class="compact-list">
+        {site.experience.slice(0, 3).map((item) => (
+          <li>
+            <strong>{item.role}</strong>
+            <span>{item.organization}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .avatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 1rem;
+  }
+</style>

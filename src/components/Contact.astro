@@ -1,0 +1,26 @@
+---
+import Section from './Section.astro';
+import { site } from '../data/site';
+---
+
+<Section id="contact" title="Contact" intro="Open to research, collaboration, and simulation-related discussions.">
+  <div class="contact-panel info-panel">
+    <div>
+      <p>
+        Feel free to reach out if you are interested in neural rendering, editable simulation, light-aware world
+        models, or embodied AI.
+      </p>
+      <p class="contact-emails">
+        <strong>{site.email}</strong><br />
+        <span>{site.secondaryEmail}</span>
+      </p>
+    </div>
+    <div class="item-links">
+      <a href={site.links.email}>Email</a>
+      <a href={site.links.scholar}>Google Scholar</a>
+      <a href={site.links.github}>GitHub</a>
+      <a href={site.links.linkedin}>LinkedIn</a>
+      <a href={site.links.cv}>CV</a>
+    </div>
+  </div>
+</Section>
