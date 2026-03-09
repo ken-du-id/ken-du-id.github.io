@@ -152,20 +152,20 @@ export const site = {
         project: '#'
       }
     },
-    {
-      title:
-        'TIID: Transformer-based Intrinsic Image Decomposition for Multi-view Inverse Rendering',
-      venue: 'Under Review',
-      year: 2026,
-      authors: 'Kang Du and collaborators',
-      description:
-        'A transformer-based multi-view intrinsic decomposition framework that predicts consistent reflectance and illumination for inverse rendering.',
-      links: {
-        paper: '#',
-        code: '#',
-        project: '#'
-      }
-    },
+    // {
+    //   title:
+    //     'TIID: Transformer-based Intrinsic Image Decomposition for Multi-view Inverse Rendering',
+    //   venue: 'Under Review',
+    //   year: 2026,
+    //   authors: 'Kang Du and collaborators',
+    //   description:
+    //     'A transformer-based multi-view intrinsic decomposition framework that predicts consistent reflectance and illumination for inverse rendering.',
+    //   links: {
+    //     paper: '#',
+    //     code: '#',
+    //     project: '#'
+    //   }
+    // },
     {
       title:
         'GS-ID: Illumination Decomposition on Gaussian Splatting via Diffusion Prior and Parametric Light Source Optimization',
