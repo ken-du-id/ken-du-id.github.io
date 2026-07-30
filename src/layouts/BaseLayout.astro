@@ -159,6 +159,53 @@ const jsonLd = {
         );
         targets.forEach((el) => observer.observe(el));
       }
+
+      // iOS Safari refuses to autoplay a video it considers invisible, and the
+      // reveal animation starts every section at opacity 0. So drive playback
+      // ourselves once each clip is actually on screen, and fall back to native
+      // controls if the browser still says no (e.g. Low Power Mode).
+      const clips = document.querySelectorAll('.work-thumb video');
+
+      const start = (video: HTMLVideoElement, retry = true) => {
+        video.muted = true;
+        const attempt = video.play();
+        if (attempt && typeof attempt.catch === 'function') {
+          attempt.catch(() => {
+            if (retry) {
+              setTimeout(() => start(video, false), 400);
+            } else {
+              video.controls = true;
+            }
+          });
+        }
+      };
+
+      if (!window.IntersectionObserver) {
+        clips.forEach((video) => start(video as HTMLVideoElement));
+      } else {
+        const player = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              const video = entry.target as HTMLVideoElement;
+              if (entry.isIntersecting) {
+                start(video);
+              } else if (!video.paused) {
+                video.pause();
+              }
+            });
+          },
+          { threshold: 0.25 }
+        );
+        clips.forEach((video) => player.observe(video));
+      }
+
+      // A tap should always be able to start playback.
+      clips.forEach((el) => {
+        const video = el as HTMLVideoElement;
+        video.addEventListener('click', () => {
+          if (video.paused) start(video, false);
+        });
+      });
     </script>
   </body>
 </html>
