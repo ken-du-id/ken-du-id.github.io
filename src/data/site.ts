@@ -263,14 +263,27 @@ export const site = {
     {
       title: 'Web 3D Editor & Content Tools',
       type: 'system',
-      period: '2020–2022',
-      organization: 'ByteDance · Meituan',
+      period: '2021–2022',
+      organization: 'Meituan',
       orgLabel: 'At',
-      orgLogos: ['/logos/bytedance.svg', '/logos/meituan.svg'],
-      role: 'Graphics rendering expert (ByteDance) · Real-time rendering engine lead (Meituan)',
+      orgLogo: '/logos/meituan.svg',
+      role: 'Real-time rendering engine lead',
       image: '/images/web3d-editor.png',
       summary:
         'Browser-based 3D editors letting non-expert teams build, edit, and publish 3D scenes — web real-time rendering, editor architecture, and asset pipelines.',
+      links: {}
+    },
+    {
+      title: 'Playable Ads Rendering Engine',
+      type: 'system',
+      period: '2020–2021',
+      organization: 'ByteDance',
+      orgLabel: 'At',
+      orgLogo: '/logos/bytedance.svg',
+      role: 'Graphics rendering expert',
+      image: '/images/playable-ads.mp4',
+      summary:
+        'A real-time rendering engine for <a href="https://ads.tiktok.com/help/article/playable-ads?lang=zh">playable ads</a> — interactive HTML5 creatives that run inside the feed. Every scene ships as a self-contained bundle of a few megabytes with no external requests, so the engine had to fit rendering, animation, and interaction into a very tight size and performance budget across a wide range of phones.',
       links: {}
     },
     {

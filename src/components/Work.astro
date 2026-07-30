@@ -71,7 +71,7 @@ const splitAuthors = (authors: string) =>
           </p>
         )}
 
-        <p class="work-summary">{item.summary}</p>
+        <p class="work-summary" set:html={item.summary} />
 
         {item.award && (
           <p class="work-award">
