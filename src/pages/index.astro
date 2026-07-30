@@ -1,28 +1,24 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
+import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
-import Publications from '../components/Publications.astro';
-import Projects from '../components/Projects.astro';
-import News from '../components/News.astro';
+import Work from '../components/Work.astro';
 import Contact from '../components/Contact.astro';
 import { site } from '../data/site';
 ---
 
 <BaseLayout
- title={`${site.name} · Personal Homepage`}
- description={site.description}
+ title={site.seo.title}
+ description={site.seo.description}
  canonical={site.website}
  image={`${site.website}avatar.png`}
 >
-  <Header />
-  <main class="container page-main">
+  <Nav />
+  <main class="container">
     <Hero />
     <About />
-    <Publications />
-    <Projects />
-    <News />
+    <Work />
     <Contact />
   </main>
 </BaseLayout>

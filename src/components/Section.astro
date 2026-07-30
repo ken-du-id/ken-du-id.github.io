@@ -2,18 +2,18 @@
 interface Props {
   id: string;
   title: string;
+  index?: string;
   intro?: string;
 }
 
-const { id, title, intro } = Astro.props;
+const { id, title, index, intro } = Astro.props;
 ---
 
-<section id={id} class="section">
-  <div class="section-header">
+<section id={id} class="section reveal">
+  <div class="section-head">
+    {index && <span class="section-index">{index}</span>}
     <h2>{title}</h2>
-    {intro && <p>{intro}</p>}
   </div>
-  <div class="section-body">
-    <slot />
-  </div>
+  {intro && <p class="section-intro">{intro}</p>}
+  <slot />
 </section>

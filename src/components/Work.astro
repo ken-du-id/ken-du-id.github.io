@@ -1,0 +1,105 @@
+---
+import Section from './Section.astro';
+import { site } from '../data/site';
+
+const linkOrder: Array<{ key: 'paper' | 'code' | 'dataset' | 'project' | 'video'; label: string }> = [
+  { key: 'paper', label: 'Paper' },
+  { key: 'code', label: 'Code' },
+  { key: 'dataset', label: 'Dataset' },
+  { key: 'project', label: 'Project' },
+  { key: 'video', label: 'Video' }
+];
+
+/** Split an author list so the site owner's name can be emphasized. */
+const splitAuthors = (authors: string) =>
+  authors.split(new RegExp(`(${site.name})`, 'g'));
+---
+
+<Section id="work" index="02" title="Selected Work">
+  {
+    site.work.map((item) => (
+      <article class="work-entry">
+        {item.image && (
+          <div class="work-thumb">
+            {item.image.endsWith('.mp4') ? (
+              <video
+                src={item.image}
+                poster={item.image.replace('.mp4', '-poster.jpg')}
+                autoplay
+                loop
+                muted
+                playsinline
+                preload="metadata"
+                aria-label={item.title}
+              />
+            ) : (
+              <img src={item.image} alt={item.title} loading="lazy" />
+            )}
+          </div>
+        )}
+        <div class="work-body">
+        <h3>{item.fullTitle ?? item.title}</h3>
+        <p class="work-meta">
+          {item.venue ? <span class="venue">{item.venue}</span> : <span class="work-period">{item.period}</span>}
+          {item.organization && (
+            <>
+              {' · '}
+              {(item.orgLabel ?? 'With') + ' '}
+              {(item.orgLogos ?? (item.orgLogo ? [item.orgLogo] : [])).map((logo) => (
+                <img class="org-logo" src={logo} alt="" aria-hidden="true" />
+              ))}
+              {item.orgUrl ? (
+                <a href={item.orgUrl}>
+                  <strong>{item.organization}</strong>
+                </a>
+              ) : (
+                <strong>{item.organization}</strong>
+              )}
+            </>
+          )}
+        </p>
+        {item.authors && (
+          <p class="work-authors">
+            {splitAuthors(item.authors).map((part) =>
+              part === site.name ? <span class="me">{part}</span> : part
+            )}
+          </p>
+        )}
+        {item.role && (
+          <p class="work-authors">
+            <strong>Role:</strong> {item.role}
+          </p>
+        )}
+
+        <p class="work-summary">{item.summary}</p>
+
+        {item.award && (
+          <p class="work-award">
+            <strong>Award:</strong> {item.award.text}
+            {item.award.url && (
+              <>
+                {' '}
+                <a href={item.award.url}>[coverage]</a>
+              </>
+            )}
+          </p>
+        )}
+
+        {item.links && linkOrder.some(({ key }) => item.links?.[key]) && (
+          <p class="work-links">
+            {linkOrder.map(({ key, label }) => item.links?.[key] && <a href={item.links[key]}>[{label}]</a>)}
+          </p>
+        )}
+
+        {item.todos && item.todos.length > 0 && (
+          <ul class="todo-list">
+            {item.todos.map((todo) => (
+              <li>TODO: {todo}</li>
+            ))}
+          </ul>
+        )}
+        </div>
+      </article>
+    ))
+  }
+</Section>

@@ -3,34 +3,13 @@ import { site } from '../data/site';
 import Section from './Section.astro';
 ---
 
-<Section id="about" title="About" >
-  <div class="about-layout">
-    <div class="about-main info-panel">
-      {site.longBio.map((paragraph) => <p>{paragraph}</p>)}
-    </div>
-
-    <div class="about-side">
-      <div class="info-panel">
-        <span class="label">Research areas</span>
-        <div class="chips">
-          {site.researchAreas.map((item) => <span class="chip">{item}</span>)}
-        </div>
-      </div>
-
-      <div class="info-panel">
-        <span class="label">Selected experience</span>
-        <ul class="timeline-mini">
-          {site.experience.map((item) => (
-            <li>
-              <span>{item.period}</span>
-              <div>
-                <strong>{item.role}</strong>
-                <p>{item.organization}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+<Section id="about" index="01" title="Short Bio">
+  <div class="about-bio">
+    {site.longBio.map((paragraph) => <p set:html={paragraph} />)}
   </div>
+
+  <p class="areas">
+    <strong>Research areas:</strong>
+    {site.researchAreas.join(' · ')}
+  </p>
 </Section>

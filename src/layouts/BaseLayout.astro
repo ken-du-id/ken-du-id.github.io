@@ -1,4 +1,8 @@
 ---
+// Self-hosted so the site renders identically where Google Fonts is unreachable.
+import '@fontsource-variable/inter';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
 import '../styles/global.css';
 import { site } from '../data/site';
 
@@ -10,32 +14,74 @@ interface Props {
 }
 
 const {
-  title = `${site.name} — ${site.subtitle}`,
-  description = site.description,
+  title = site.seo.title,
+  description = site.seo.description,
   canonical = site.website,
   image = `${site.website}avatar.png`
 } = Astro.props;
 
-const jsonLd = {
-  '@context': 'https://schema.org',
+const publications = site.work.filter((item) => item.type === 'publication');
+
+const person = {
   '@type': 'Person',
+  '@id': `${site.website}#person`,
   name: site.name,
-  alternateName: site.chineseName,
+  alternateName: [site.chineseName, 'Du Kang'],
   url: site.website,
   image,
   email: site.email,
   jobTitle: site.title,
   description: site.description,
+  knowsAbout: site.researchAreas,
+  affiliation: {
+    '@type': 'CollegeOrUniversity',
+    name: 'The Hong Kong University of Science and Technology (Guangzhou)',
+    url: 'https://www.hkust-gz.edu.cn/'
+  },
+  alumniOf: [
+    { '@type': 'CollegeOrUniversity', name: 'The University of Hong Kong' },
+    { '@type': 'CollegeOrUniversity', name: 'Texas A&M University' }
+  ],
   address: {
-    '@type': 'Place',
+    '@type': 'PostalAddress',
     addressLocality: site.location
   },
-  sameAs: [
-    site.links.scholar,
-    site.links.github,
-    site.links.linkedin,
-    site.links.website
-  ].filter(Boolean)
+  sameAs: [site.links.scholar, site.links.github, site.links.linkedin].filter(Boolean)
+};
+
+const namedAuthors = (authors?: string) => {
+  const names = (authors ?? site.name)
+    .split(',')
+    .map((n) => n.trim())
+    .filter((n) => n && !n.toLowerCase().includes('collaborator'));
+  return (names.length ? names : [site.name]).map((name) => ({ '@type': 'Person', name }));
+};
+
+const scholarlyArticles = publications.map((pub) => ({
+  '@type': 'ScholarlyArticle',
+  name: pub.fullTitle ?? pub.title,
+  author: namedAuthors(pub.authors),
+  datePublished: pub.period,
+  publication: pub.venue,
+  ...(pub.links?.paper ? { url: pub.links.paper } : {}),
+  ...(pub.links?.code ? { codeRepository: pub.links.code } : {})
+}));
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ProfilePage',
+      '@id': site.website,
+      url: site.website,
+      name: title,
+      description,
+      inLanguage: 'en',
+      mainEntity: { '@id': `${site.website}#person` }
+    },
+    person,
+    ...scholarlyArticles
+  ]
 };
 ---
 
@@ -47,30 +93,72 @@ const jsonLd = {
 
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content="index,follow" />
+    <meta name="keywords" content={site.seo.keywords.join(', ')} />
+    <meta name="author" content={`${site.name} (${site.chineseName})`} />
     <link rel="canonical" href={canonical} />
 
-    <meta property="og:type" content="website" />
+    <meta
+      name="robots"
+      content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+    />
+    <meta name="googlebot" content="index,follow" />
+    <meta name="bingbot" content="index,follow" />
+    <meta name="baiduspider" content="index,follow" />
+
+    <!-- Baidu treats these as mobile-adaptation and rendering hints -->
+    <meta name="applicable-device" content="pc,mobile" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <meta property="og:type" content="profile" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={image} />
-    <meta property="og:site_name" content={site.name} />
+    <meta property="og:image:alt" content={`${site.name} (${site.chineseName})`} />
+    <meta property="og:site_name" content={`${site.name} · ${site.chineseName}`} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="zh_CN" />
+    <meta property="profile:first_name" content="Kang" />
+    <meta property="profile:last_name" content="Du" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
 
+    <meta name="theme-color" content="#1b4f93" />
     <link rel="icon" type="image/png" href="/avatar.png" />
+    <link rel="apple-touch-icon" href="/avatar.png" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
 
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify(jsonLd)}
-    />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
   </head>
   <body>
-    <div class="page-shell"></div>
     <slot />
+
+    <script>
+      const targets = document.querySelectorAll('.reveal');
+      if (!window.IntersectionObserver) {
+        targets.forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -12% 0px' }
+        );
+        targets.forEach((el) => observer.observe(el));
+      }
+    </script>
   </body>
 </html>
